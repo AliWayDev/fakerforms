@@ -7,16 +7,19 @@ import { v4 as uuidv4 } from "uuid";
 import { QuestionsPicker } from "./components/questions-picker";
 import { Question } from "./components/question";
 
-import { createTemplate } from "./api/createTemplate";
+// import { createTemplate } from "./api/createTemplate";
 
 import {
   checkThePayloadCreateTemplate,
   getTitleOfActionsPage,
 } from "../../utils";
+import useMockDataStore from "../../global/store/mockDataStore";
 
 export const Create = () => {
   const navigate = useNavigate();
   const { type } = useParams();
+
+  const { addTemplates } = useMockDataStore();
 
   const [questions, setQuestions] = useState([]);
   const [title, setTitle] = useState("");
@@ -73,8 +76,9 @@ export const Create = () => {
   const createTemplateHandler = async () => {
     const sample = {};
 
-    sample.id = localStorage.getItem('id');
+    sample.id = localStorage.getItem("id");
     sample.template = {
+      id: uuidv4(),
       title: title,
       description: description,
       topic: topic,
@@ -91,12 +95,12 @@ export const Create = () => {
     });
 
     if (checkThePayloadCreateTemplate(sample)) {
-      const res = await createTemplate(sample);
-
-      if (res?.data) {
-        navigate("/?refresh=true");
-        toast.success(res?.msg);
-      }
+      // const res = await createTemplate(sample);
+      console.log(sample)
+      addTemplates(sample);
+      toast.success("Success!");
+      navigate('/')
+      // }
     } else {
       toast.error("Check the payload!");
     }
@@ -110,7 +114,7 @@ export const Create = () => {
         navigate("/?refresh=true");
         return toast.success("This feature will come soon!");
       default:
-        return 
+        return;
     }
   };
 

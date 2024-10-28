@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import useAuthStore from "../../global/store/authStore";
-import { loginToAccount } from "./api/login";
+// import { loginToAccount } from "./api/login";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -19,23 +19,23 @@ export const Login = () => {
       });
     }
 
-    let res = await loginToAccount(username, password);
+    // let res = await loginToAccount(username, password);
 
-    if (res.ok) {
-      let data = res.data.data
+    // if (res.ok) {
+    //   let data = res.data.data
 
-      toast.success("Success!", {
-        position: "top-left",
-      });
-      console.log(data)
-      login(data);
+    toast.success("Success!", {
+      position: "top-left",
+    });
 
-      return navigate("/");
-    } else {
-      toast.error(res.msg, {
-        position: "top-left",
-      });
-    }
+    login({ token: "testtoken", existsUser: { username: "admin", id: 1 } });
+
+    return navigate("/");
+    // } else {
+    //   toast.error(res.msg, {
+    //     position: "top-left",
+    //   });
+    // }
   };
 
   return (

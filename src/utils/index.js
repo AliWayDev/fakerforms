@@ -41,9 +41,7 @@ export const checkThePayloadCreateTemplate = (data) => {
       count++;
     }
   }
-
-  console.log(count);
-
+  
   if (!data.id || !data.template || count > 0) {
     return false;
   } else {

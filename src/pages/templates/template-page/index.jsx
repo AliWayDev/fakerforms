@@ -4,21 +4,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Loader } from "../../../components/UI/Loader";
 
 import { getQuestionType } from "../../../utils";
-import { getTemplate } from "../api/getTemplate";
+// import { getTemplate } from "../api/getTemplate";
 import { toast } from "react-toastify";
+import useMockDataStore from "../../../global/store/mockDataStore";
 
 export const TemplatePage = () => {
   const navigate = useNavigate();
   const { templateId } = useParams();
 
+  const templates = useMockDataStore((state) => state.templates);
+
   const [template, setTemplate] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      const templateData = await getTemplate(templateId);
+    // (async () => {
+    //   const templateData = await getTemplate(templateId);
 
-      setTemplate(templateData);
-    })();
+    //   setTemplate(templateData);
+    // })();
+    console.log(templates, 'templates')
+    let sample = templates.filter((i) => i.template.id === templateId);
+    console.log(sample)
+    setTemplate(sample[0]);
   }, [templateId]);
 
   return (

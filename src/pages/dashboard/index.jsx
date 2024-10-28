@@ -1,35 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Templates } from "../../components/templates";
 import { FilterButtons } from "./components/filter";
 
-import { getAllTemplates } from "./api/all-templates";
-import { getMyTemplates } from "./api/my-templates";
+// import { getAllTemplates } from "./api/all-templates";
+// import { getMyTemplates } from "./api/my-templates";
 
 import useAuthStore from "../../global/store/authStore";
-import useSearch from "../../global/store/searchStore";
+// import useSearch from "../../global/store/searchStore";
+import useMockDataStore from "../../global/store/mockDataStore";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { refresh } = useParams();
-  const { searchText } = useSearch();
+  // const { refresh } = useParams();
+  // const { searchText } = useSearch();
 
   const isAuth = useAuthStore((state) => state.isAuthenticated);
 
-  const [templates, setTemplates] = useState([]);
+  // const [templates, setTemplates] = useState([]);
+
+  const templates = useMockDataStore((state) => state.templates)
+
   const [filterButton, setFilterButton] = useState("all");
 
-  useEffect(() => {
-    (async () => {
-      const templates =
-        filterButton === "all" || !isAuth
-          ? await getAllTemplates(searchText)
-          : await getMyTemplates(searchText);
+  // useEffect(() => {
+  //   (async () => {
+  //     const templates =
+  //       filterButton === "all" || !isAuth
+  //         ? await getAllTemplates(searchText)
+  //         : await getMyTemplates(searchText);
 
-      setTemplates(templates);
-    })();
-  }, [filterButton, refresh, searchText, isAuth]);
+  //     setTemplates(templates);
+  //   })();
+  // }, [filterButton, refresh, searchText, isAuth]);
+
+  console.log(templates)
 
   return (
     <div>
